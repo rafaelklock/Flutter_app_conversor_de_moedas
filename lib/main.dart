@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
@@ -20,22 +18,17 @@ void main() async {
   ));
 }
 
-
 Future<Map> getData() async {
   http.Response response = await http.get(request);
   return json.decode(response.body)["results"]["currencies"];
 }
-
 
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 }
 
-
-
 class _HomeState extends State<Home> {
-
   final realController = TextEditingController();
   final dollarController = TextEditingController();
   final euroController = TextEditingController();
@@ -44,33 +37,36 @@ class _HomeState extends State<Home> {
   double euro;
 
   void _realChanged(String text) {
-    if(text.isEmpty){clearAll();}
+    if (text.isEmpty) {
+      clearAll();
+    }
     double real = double.parse(text);
     dollarController.text = (real / dollar).toStringAsFixed(2);
     euroController.text = (real / euro).toStringAsFixed(2);
   }
 
   void _dollarChanged(String text) {
-    if(text.isEmpty){clearAll();}
+    if (text.isEmpty) {
+      clearAll();
+    }
     double dollar = double.parse(text);
     realController.text = (dollar * this.dollar).toStringAsFixed(2);
     euroController.text = (dollar * this.dollar / euro).toStringAsFixed(2);
   }
 
   void _euroChanged(String text) {
-    if(text.isEmpty){clearAll();}
+    if (text.isEmpty) {
+      clearAll();
+    }
     double euro = double.parse(text);
     realController.text = (euro * this.euro).toStringAsFixed(2);
-    dollarController.text = (euro * this.euro /dollar).toStringAsFixed(2);
-
+    dollarController.text = (euro * this.euro / dollar).toStringAsFixed(2);
   }
 
-
-  void clearAll(){
-    realController.text='';
-    dollarController.text='';
-    euroController.text='';
-
+  void clearAll() {
+    realController.text = '';
+    dollarController.text = '';
+    euroController.text = '';
   }
 
   @override
@@ -105,7 +101,6 @@ class _HomeState extends State<Home> {
                       )),
                 );
               } else {
-
                 dollar = snapshot.data["USD"]["buy"];
                 euro = snapshot.data["EUR"]["buy"];
 
@@ -119,13 +114,14 @@ class _HomeState extends State<Home> {
                     children: <Widget>[
                       Icon(Icons.monetization_on,
                           size: 150, color: Colors.amber),
-                      buildTextField("Reais", "R\$ ", realController, _realChanged),
+                      buildTextField(
+                          "Reais", "R\$ ", realController, _realChanged),
                       Divider(),
-                      buildTextField("Dóllar", "US\$ ", dollarController, _dollarChanged),
+                      buildTextField(
+                          "Dóllar", "US\$ ", dollarController, _dollarChanged),
                       Divider(),
-                      buildTextField("Euro", "€ ", euroController, _euroChanged),
-
-
+                      buildTextField(
+                          "Euro", "€ ", euroController, _euroChanged),
                     ],
                   ),
                 );
@@ -137,11 +133,10 @@ class _HomeState extends State<Home> {
   }
 }
 
-
-Widget buildTextField(String label, String prefix, TextEditingController c, Function f) {
+Widget buildTextField(
+    String label, String prefix, TextEditingController c, Function f) {
   return TextField(
     keyboardType: TextInputType.number,
-
     style: TextStyle(color: Colors.amber, fontSize: 25),
     decoration: InputDecoration(
       labelText: "$label",
@@ -153,9 +148,3 @@ Widget buildTextField(String label, String prefix, TextEditingController c, Func
     controller: c,
   );
 }
-
-
-
-
-
-
