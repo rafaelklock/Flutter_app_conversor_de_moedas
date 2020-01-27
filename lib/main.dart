@@ -136,7 +136,7 @@ class _HomeState extends State<Home> {
 Widget buildTextField(
     String label, String prefix, TextEditingController c, Function f) {
   return TextField(
-    keyboardType: TextInputType.number,
+    keyboardType: TextInputType.numberWithOptions(decimal: true),
     style: TextStyle(color: Colors.amber, fontSize: 25),
     decoration: InputDecoration(
       labelText: "$label",
@@ -148,3 +148,4 @@ Widget buildTextField(
     controller: c,
   );
 }
+
